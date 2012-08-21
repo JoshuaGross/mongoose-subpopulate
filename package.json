@@ -1,0 +1,29 @@
+{
+    "name": "mongoose-subpopulate",
+    "version": "0.0.1",
+    "main": "./lib/mongoose-subpopulate.js",
+    "scripts": {
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/JoshuaGross/mongoose-subpopulate.git"
+    },
+    "keywords": [
+        "mongoose",
+        "populate",
+        "subpopulate"
+    ],
+    "author": {
+        "name": "Joshua Gross",
+        "email": "josh@spandex.io",
+        "url": "http://www.joshisgross.com"
+    },
+    "license": "MIT",
+    "dependencies": {
+      "mongoose":"2.7.1",
+      "async":""
+    },
+    "engine": {
+        "node": ">=0.7.0"
+    }
+}
