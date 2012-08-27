@@ -1,6 +1,6 @@
 {
     "name": "mongoose-subpopulate",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "main": "./lib/mongoose-subpopulate.js",
     "scripts": {
     },
