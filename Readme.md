@@ -12,7 +12,7 @@ It allows you to do this:
 Mongoose-subpopulate also allows you to ignore "err" in your callbacks:
 
     m.User.find({}).populate('best_friend').populate('best_friend.best_friend').exec(function (result) {
-        console.log('My BFF\'s BFF: ', result.best_friend.best_friend.username);
+        console.log("My BFF's BFF: ", result.best_friend.best_friend.username);
     });
 
 ... and if you don't handle the errors, Mongoose-subpopulate will. Use a global exception handler like webkit-devtools-agent if you plan to do this.
