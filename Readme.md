@@ -19,7 +19,7 @@ Mongoose-subpopulate also allows you to ignore "err" in your callbacks:
 
 Mongoose-subpopulate also handles ObjectIDs better than vanilla mongoose, and allows you to save a sub-object to another object without fear of it being cast to an ObjectId, as with vanilla Mongoose. 
 
-Currently Mongoose-subpopulate is only working with Mongoose 2.7 (untested in Mongoose 3 because I haven't upgraded yet). If you need to use Mongoose 3, please fork, fix, and send me a pull request.
+Mongoose-subpopulate supports Mongoose 3.x and Mongoose 2.7.
 
 Installation
 ============

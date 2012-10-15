@@ -116,6 +116,7 @@ describe('mongoose wrapping of find, exec, etc', function () {
           expect(users[i]).to.have.property('_id');
           expect(users[i]._id).to.not.be(undefined);
           findOneID = users[i]._id;
+          console.log(findOneID);
         }
         done();
       });
@@ -139,7 +140,9 @@ describe('mongoose wrapping of find, exec, etc', function () {
         expect(false).to.be(true); // should not reach here
       });
     } catch (e) {
-      expect(e.toString()).to.be('Error: Database error: findOne failed / Error: Invalid ObjectId');
+      var mongoose2_7 = (e.toString() === 'Error: Database error: findOne failed / Error: Invalid ObjectId')
+      var mongoose3_x = (e.toString() === 'Error: Database error: findOne failed / TypeError: Invalid select() argument. Must be a string or object.')
+      expect(mongoose2_7 || mongoose3_x).to.be(true);
       done();
     }
   });
@@ -152,8 +155,12 @@ describe('mongoose wrapping of find, exec, etc', function () {
   });*/
   it('should wrap errors from findOne', function (done) {
     var m = common.db();
-    m.User.findOne({ _id: findOneID }, [], {}, function (user) {
+    console.log(findOneID);
+    console.log({ _id: findOneID });
+    //m.User.findOne({ _id: findOneID }, [], {}, function (user) {
+    m.User.findOne({ _id: findOneID }, function (user) {
       expect(user).to.not.be(undefined);
+      expect(user).to.not.be(null);
       expect(user).to.have.property('_id');
       expect(user._id).to.not.be(undefined);
       done();
