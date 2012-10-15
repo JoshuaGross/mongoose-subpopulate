@@ -1,6 +1,6 @@
 {
   "name": "mongoose-subpopulate",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "./lib/mongoose-subpopulate.js",
   "scripts": {},
   "repository": {
@@ -22,8 +22,6 @@
     "expect.js": "~0.1.2"
   },
   "dependencies": {
-    "mongodb": "1.1.11",
-    "mongoose": "3.3.1",
     "async": ""
   },
   "engine": {
