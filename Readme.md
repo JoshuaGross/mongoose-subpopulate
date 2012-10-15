@@ -6,7 +6,7 @@ Mongoose-subpopulate was created for my needs on SpanDeX.io. It's monkey-patch o
 It allows you to do this:
 
     m.User.find({}).populate('best_friend').populate('best_friend.best_friend').exec(function (err, result) {
-        console.log('My BFF\'s BFF: ', result.best_friend.best_friend.username);
+        console.log("My BFF's BFF: ", result.best_friend.best_friend.username);
     });
 
 Mongoose-subpopulate also allows you to ignore "err" in your callbacks:
