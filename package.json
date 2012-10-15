@@ -22,7 +22,8 @@
     "expect.js": "~0.1.2"
   },
   "dependencies": {
-    "mongoose": "2.7.1",
+    "mongodb": "1.1.11"
+    "mongoose": "3.3.1",
     "async": ""
   },
   "engine": {
