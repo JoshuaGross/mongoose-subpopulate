@@ -34,25 +34,12 @@ var defineModels = function defineModels (mongoose, callback) {
   mongoose.User = mongooseSubpopulate.wrapSchema(mongoose.model('User'));
   mongoose.Project = mongooseSubpopulate.wrapSchema(mongoose.model('Project'));
 
-  callback();
+  if (callback) callback();
 };
 
 exports.createMongooseObject = function (callback) {
   exports.db = mongooseSubpopulate.extendMongoose(require('mongoose'), defineModels);
-
-  var connectOrig = exports.db.connect;
-  exports.db.connect = function (callback) {
-    // TOP SECRET AND STUFF
-    // move to a config file?
-    if ('test' === process.env.NODE_ENV) {
-      return connectOrig('mongodb://localhost/mongoose-subpopulate-test', callback);
-    } else {
-      throw new Error('This is only meant for testing.');
-    }
-
-    console.warn('Cannot connect to mongoose, unknown environment', process.env.NODE_ENV);
-  };
-
+  exports.db.connect('mongodb://localhost/mongoose-subpopulate-test', callback);
   return exports.db;
 };
 

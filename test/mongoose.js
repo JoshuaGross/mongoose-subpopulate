@@ -116,7 +116,6 @@ describe('mongoose wrapping of find, exec, etc', function () {
           expect(users[i]).to.have.property('_id');
           expect(users[i]._id).to.not.be(undefined);
           findOneID = users[i]._id;
-          console.log(findOneID);
         }
         done();
       });
@@ -155,9 +154,6 @@ describe('mongoose wrapping of find, exec, etc', function () {
   });*/
   it('should wrap errors from findOne', function (done) {
     var m = common.db();
-    console.log(findOneID);
-    console.log({ _id: findOneID });
-    //m.User.findOne({ _id: findOneID }, [], {}, function (user) {
     m.User.findOne({ _id: findOneID }, function (user) {
       expect(user).to.not.be(undefined);
       expect(user).to.not.be(null);

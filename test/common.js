@@ -18,8 +18,7 @@ exports.connectDB = function (callback) {
       m = mongooseExtender.db;
       callback();
     } else {
-      m = require('./fixtures/model.js').createMongooseObject()
-      m.connect(function () { callback(); });
+      m = require('./fixtures/model.js').createMongooseObject(callback);
     }
   } else {
     callback();
