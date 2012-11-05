@@ -146,12 +146,12 @@ describe('mongoose wrapping of find, exec, etc', function () {
     }
   });
   // TODO: rigorously test this
-  /*it('should handle errors from object creation', function (done) {
-    var m = common.db();
+  //it('should handle errors from object creation', function (done) {
+    //var m = common.db();
     // leave necessary fields empty
-    var u = new m.User();
-    u.save(done);
-  });*/
+    //var u = new m.User();
+    //u.save(done);
+  //});
   it('should wrap errors from findOne', function (done) {
     var m = common.db();
     m.User.findOne({ _id: findOneID }, function (user) {
@@ -370,9 +370,9 @@ describe('mongoose additions bugs', function () {
     });
   });
 });
-/*describe('mongoose large record handling', function () {
+describe('mongoose large record handling', function () {
   it('should be able to create large amounts of records', function (done) {
-    this.timeout(10000);
+    this.timeout(0);
     var m = common.db();
     var ids = [];
     for (var i = 0; i < 1000; i++) {
@@ -391,11 +391,20 @@ describe('mongoose additions bugs', function () {
     });
   });
   it('should be able to fetch large amounts of records', function (done) {
-    this.timeout(10000);
+    this.timeout(0);
     var m = common.db();
     m.User.find().exec(function (users) {
       expect(users.length).to.be.greaterThan(1000);
-      done();
+      async.map(users, function (u, iterate) {
+        var newEmail = u.email+'.uk';
+        u.email = newEmail;
+        u.save(function (err, newU) {
+          expect(newU.email).to.be(newEmail);
+          iterate(null, null);
+        });
+      }, function () {
+        done();
+      });
     });
   });
-});*/
+});
