@@ -25,6 +25,7 @@ var defineModels = function defineModels (mongoose, callback) {
   var UserSchema = new Schema({
     'username': { type: String, required: true },
     'email': { type: String, index: {unique: true}, required: true },
+    'favorite_document': { type: ObjectId, ref: 'Document', required: false },
     'password': { type: String }
   });
   mongoose.model('User', UserSchema);

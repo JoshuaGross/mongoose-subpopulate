@@ -371,6 +371,21 @@ describe('mongoose additions bugs', function () {
   });
 });
 describe('mongoose large record handling', function () {
+  var doc;
+  var project;
+  it('should set up multiple-level populate', function (done) {
+    var m = common.db();
+    project = new m.Project();
+    project.owner = new m.User();
+    project.title = 'The Coolest Project';
+    project.save(function () {
+      doc = new m.Document();
+      doc.project = project;
+      doc.save(function () {
+        done();
+      });
+    });
+  });
   it('should be able to create large amounts of records', function (done) {
     this.timeout(0);
     var m = common.db();
@@ -382,6 +397,7 @@ describe('mongoose large record handling', function () {
       var u = new m.User();
       u.username = 'username__'+i;
       u.email = 'test'+(500+i)+'@test.edu';
+      u.favorite_document = doc;
       u.save(function () {
         iter(null);
         u = null;
@@ -393,8 +409,11 @@ describe('mongoose large record handling', function () {
   it('should be able to fetch large amounts of records', function (done) {
     this.timeout(0);
     var m = common.db();
+    console.time('get users');
     m.User.find().exec(function (users) {
+      console.timeEnd('get users');
       expect(users.length).to.be.greaterThan(1000);
+      console.time('resave users');
       async.map(users, function (u, iterate) {
         var newEmail = u.email+'.uk';
         u.email = newEmail;
@@ -403,6 +422,51 @@ describe('mongoose large record handling', function () {
           iterate(null, null);
         });
       }, function () {
+        console.timeEnd('resave users');
+        done();
+      });
+    });
+  });
+  it('should be able to fetch and populate large amounts of records', function (done) {
+    this.timeout(0);
+    var m = common.db();
+    console.time('get users');
+    m.User.find({ favorite_document: { $ne: null } }).populate('favorite_document').exec(function (users) {
+      console.timeEnd('get users');
+      expect(users.length).to.be(1000);
+      console.time('resave users');
+      async.map(users, function (u, iterate) {
+        expect(!!u.favorite_document).to.be(true);
+        var newEmail = u.email+'.uk';
+        u.email = newEmail;
+        u.save(function (err, newU) {
+          expect(newU.email).to.be(newEmail);
+          iterate(null, null);
+        });
+      }, function () {
+        console.timeEnd('resave users');
+        done();
+      });
+    });
+  });
+  it('should be able to fetch and sub-populate large amounts of records', function (done) {
+    this.timeout(0);
+    var m = common.db();
+    console.time('get users');
+    m.User.find({ favorite_document: { $ne: null } }).populate('favorite_document').populate('favorite_document.project').exec(function (users) {
+      console.timeEnd('get users');
+      expect(users.length).to.be(1000);
+      console.time('resave users');
+      async.map(users, function (u, iterate) {
+        expect(!!u.favorite_document.project).to.be(true);
+        var newEmail = u.email+'.uk';
+        u.email = newEmail;
+        u.save(function (err, newU) {
+          expect(newU.email).to.be(newEmail);
+          iterate(null, null);
+        });
+      }, function () {
+        console.timeEnd('resave users');
         done();
       });
     });
