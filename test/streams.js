@@ -32,6 +32,7 @@ describe('mongoose streams', function () {
     var usersFound = 0;
 
     stream.on('data', function (user) {
+      expect(typeof user.getBare).to.be('function');
       usersFound++;
     });
     stream.on('close', function () {
