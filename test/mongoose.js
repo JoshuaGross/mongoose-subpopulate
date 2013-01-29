@@ -280,7 +280,8 @@ describe('mongoose additions for population', function () {
   });
   it('should support sub-population manipulation through grandparent', function (done) {
     var m = common.db();
-    m.Project.findById(projectID).populate('main_document').populate('main_document.owner').exec(function (project) {
+    m.Project.findById(projectID).populate('main_document').populate('main_document.owner').exec(function (err, project) {
+      console.log(err, project);
       expect(typeof project._id).to.be('string');
       expect(typeof project.main_document._id).to.be('string');
       expect(typeof project.main_document.owner._id).to.be('string');
