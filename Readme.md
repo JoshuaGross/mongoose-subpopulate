@@ -1,3 +1,8 @@
+DEPRECATED
+====================
+
+This module is deprecated. I recommend using Mongoose 3.6 vanilla.
+
 Mongoose Subpopulate
 ====================
 
